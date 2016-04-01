@@ -1,0 +1,65 @@
+doctype
+html(ng-app="votingApp")
+  head
+    title #{title} 
+    link(rel="stylesheet", href="bower_components/bootstrap/dist/css/bootstrap.min.css")
+    link(rel="stylesheet", href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css")
+    link(rel="stylesheet", href="bower_components/angular-chart.js/dist/angular-chart.css")
+    link(rel="stylesheet", href="bower_components/font-awesome/css/font-awesome.min.css")
+    link(rel="stylesheet", href="bower_components/bootstrap-social/bootstrap-social.css")
+    script(type='text/javascript', src='bower_components/Chart.js/Chart.min.js')    
+    script(type='text/javascript', src='bower_components/angular/angular.min.js')
+    script(type='text/javascript', src='bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js')
+    script(type='text/javascript', src='bower_components/angular-ui-router/release/angular-ui-router.min.js')
+    script(type='text/javascript', src='bower_components/angular-resource/angular-resource.min.js')
+    script(type='text/javascript', src='bower_components/angular-cookies/angular-cookies.min.js')
+    script(type='text/javascript', src='bower_components/angular-sanitize/angular-sanitize.min.js')
+    script(type='text/javascript', src='bower_components/angular-chart.js/dist/angular-chart.js')
+
+    script(src='public/js/app.js') 
+    script(src='public/js/controllers.js')
+    script(src='public/js/services.js') 
+    
+    script(type="text/ng-template" id="alert.html")
+      | <div class="alert" style="background-color:#fa39c3;color:white" role="alert">
+      |  <div ng-transclude></div>
+      | </div>
+  
+  body(class="container")
+    div
+      header
+        nav(class="navbar navbar-default navbar-static-top")
+            .navbar-header
+              button(type="button",class="navbar-toggle collapsed",data-toggle="collapse",data-target="#bs-voting-navbar-collapse",aria-expanded="false")
+                span.sr-only Toggle navigation
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+              a.navbar-brand(href="#") Voting-App
+            .collapse.navbar-collapse(id="bs-voting-navbar-collapse")
+              ul.nav.navbar-nav.navbar-right
+                li
+                  a(class="navbar-link",ui-sref="home",ui-sref-active="active")  Home
+                if loggedIn
+                  li
+                    a(class="navbar-link",ui-sref="mypolls",ui-sref-active="active") My polls
+                  li
+                      a(class="navbar-link",ui-sref="newpoll",ui-sref-active="active") New poll
+                  li.nav.navbar-nav
+                      .navbar-form
+                        a(class="btn btn-block btn-default",href="/logout") Logout
+                else
+                    li.nav.navbar-nav
+                      .navbar-form
+                        a(class="btn btn-block btn-default",ui-sref="login",ui-sref-active="active") Login
+    .container
+      .main-content(ng-init="alerts=[]")
+        uib-alert.fade.in(ng-repeat="alert in alerts" type="{{alert.type}}" close="alerts.splice($index,1)" dismiss-on-timeout=10000) {{alert.msg}}
+        block content
+      .sidebar
+        block sidebar
+    footer
+      p 
+      
+      
+         

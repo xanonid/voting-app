@@ -1,0 +1,35 @@
+div.text-center(ng-controller="PollCtrl as pollctrl")
+    h2 {{title}}
+    
+    .row
+        .col-sm-6.col-lg-6
+            div(ng-hide="dataIsLoaded")
+                p Loading....
+            div(ng-show="dataIsLoaded")
+                p I'd like to vote for...:
+                p(ng-repeat="opt in options track by $index")
+                    a.btn.btn-success(ng-click="vote(opt._id)")
+                        span.glyphicon.glyphicon-ok-circle
+                        | &nbsp; {{opt.title}} - {{opt.votes || 0}}
+                    br
+                    form.form-inline(name="newOptionForm",ng-submit="addNewOption()")
+                        form-group
+                            label.sr-only(for="inputNewOption") New option:
+                            input.form-control(required type="text" ng-model="newoption",id="inputNewOption")
+                        button.btn.btn-default(ng-disabled="newOptionForm.$invalid",type="submit") 
+                         span.glyphicon.glyphicon-plus
+                         | &nbsp; Add to list
+                - var theurl = escape(appUrl.concat("#/poll/"))
+                a(target="_blank" href="http://twitter.com/share?text=See this poll!&url="+theurl+"{{id}}",class="btn btn-social btn-twitter") 
+                    span.fa.fa-twitter
+                    | Share this poll
+                br
+                a(href=appUrl.concat("#/poll/")+"{{id}}") Permalink
+                br
+                br
+                div(ng-show="owner == '"+user._id+"'")
+                    btn.btn.btn-danger(ng-click="deletePoll()") Delete this poll
+        .col-sm-6.col-lg-6            
+            canvas(id="doughnut",class="chart chart-doughnut",chart-data="chartdata",chart-labels="chartlabels",chart-legend="true",chart-click="onChartClick")
+        
+.ui-view

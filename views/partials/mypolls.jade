@@ -1,0 +1,22 @@
+div.text-center(ng-controller="VotingAppCtrl as ctrl")
+    h2 Your polls
+    div(ng-hide="dataIsLoaded")
+        p Loading....
+    div(ng-show="dataIsLoaded" class="ng-hide")
+        p Here a list of polls you own:
+
+    ul.list-group    
+        a.list-group-item(ng-repeat="poll in ctrl.polls | filter: {owner: '"+user._id+"'} track by $index", ui-sref="poll({id:poll._id})") 
+            b {{poll.title}}
+            ul.list-inline
+                li(ng-repeat="option in poll.options | orderBy : '-votes || 0' track by $index" ng-class="{mark:$first}" ){{option.title}}: {{option.votes || 0}}
+        
+    p
+        //theurl = "#{escape appUrl.concat("#/home?id=",user._id)}"
+        //theurl = "#{"".concat("#/home?id=",user._id)}"
+        - var theurl = escape(appUrl.concat("#/home?id=",user._id))
+        a(target="_blank" href="http://twitter.com/share?text=Vote in my polls!&url="+theurl,class="btn btn-social btn-twitter") 
+         span.fa.fa-twitter
+         | Share my polls
+        
+.ui-view

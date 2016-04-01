@@ -1,0 +1,14 @@
+div.text-center(ng-controller="VotingAppCtrl as ctrl")
+    h2 Welcome!
+    div(ng-hide="dataIsLoaded")
+        p Loading....
+    div(ng-show="dataIsLoaded" class="ng-hide")
+        if loggedIn
+            p Below are the hosted polls. Select a poll to see the results and vote, or 
+                a(ui-sref="newpoll") make a new poll.
+        else
+            p Below are the hosted polls. Select a poll to see the results and vote, or sign-in to make a new poll.
+
+    ul.list-group    
+        a.list-group-item(ng-repeat="poll in ctrl.polls | filter: {owner: filter_owner} track by $index", ui-sref="poll({id:poll._id})") {{poll.title}}
+.ui-view

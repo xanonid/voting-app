@@ -1,0 +1,12 @@
+div(ng-controller="NewPollCtrl as ctrl")
+    h2 Add new poll
+    div()
+        form.form(name="FormName",ng-submit="addPoll()")
+                form-group
+                    label(for="InputTitle") Title
+                    input.form-control(required type="text" ng-model="pollTitle",id="InputTitle")    
+                form-group
+                    label(for="inputOptions") Options (separate options by newline)
+                    textarea.form-control(rows="3"  required type="text" ng-model="pollOptions",id="inputOptions")
+                button.btn.btn-default(ng-disabled="newOptionForm.$invalid",type="submit") 
+                     | &nbsp; Create new poll
